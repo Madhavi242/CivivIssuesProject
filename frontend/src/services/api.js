@@ -26,14 +26,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message =
-      error.response?.data?.message ||
-      error.message ||
-      'An unexpected error occurred';
-    
-    // Auto logout on 401 if unauthorized
-    if (error.response?.status === 401 && !window.location.pathname.includes('/login')) {
-      // localStorage.removeItem('civicpulse_token');
+    let message = error.response?.data?.message || error.message;
+
+    if (error.message === 'Network Error') {
+      message = 'Cannot connect to backend server. If testing locally, ensure backend is running (`cd backend && npm start`). If on Render, please allow 30s for the free server to wake up.';
+    } else if (!message) {
+      message = 'An unexpected server communication error occurred.';
     }
 
     return Promise.reject({
