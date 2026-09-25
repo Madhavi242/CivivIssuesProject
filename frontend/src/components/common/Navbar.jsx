@@ -62,26 +62,30 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full glass-panel border-b border-white/[0.08] bg-[#080c14]/85 backdrop-blur-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center shadow-glow group-hover:scale-105 transition-transform">
-              <Activity className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center shadow-glow group-hover:scale-105 transition-all">
+              <Activity className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent">
-                CivicPulse
-              </span>
-              <span className="hidden sm:inline-block ml-2 text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                Hackathon 2026
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-display font-extrabold bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-transparent">
+                  CivicPulse
+                </span>
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                  Live
+                </span>
+              </div>
+              <div className="text-[10px] text-slate-400 tracking-wide">Intelligent Civic Platform</div>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-1 p-1 rounded-2xl bg-slate-900/60 border border-white/5 backdrop-blur-md">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = location.pathname === link.path;
@@ -89,13 +93,13 @@ export default function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
-                      ? 'bg-blue-600/15 text-blue-400 border border-blue-500/20'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-gradient-to-r from-blue-600/30 to-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-glow-cyan'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                   <span>{link.label}</span>
                 </Link>
               );
@@ -105,18 +109,18 @@ export default function Navbar() {
           {/* Right Header Actions */}
           <div className="hidden lg:flex items-center space-x-3">
             {/* Quick Demo Switcher */}
-            <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-1 text-xs">
-              <span className="text-slate-400 px-2 font-medium">Demo As:</span>
+            <div className="flex items-center bg-slate-900/80 border border-white/5 rounded-xl p-1 text-xs backdrop-blur-md">
+              <span className="text-slate-400 px-2 font-semibold text-[11px]">Persona:</span>
               {DEMO_ACCOUNTS.map((acc) => {
                 const isCurrent = user?.role === acc.role;
                 return (
                   <button
                     key={acc.role}
                     onClick={() => handleRoleSwitch(acc.role)}
-                    className={`px-2 py-1 rounded font-medium transition-all ${
+                    className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all ${
                       isCurrent
                         ? `${acc.color} shadow-sm border`
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/80'
                     }`}
                     title={`Switch session to ${acc.label}`}
                   >
@@ -129,7 +133,7 @@ export default function Navbar() {
             {/* Report Button */}
             <Link
               to="/report"
-              className="flex items-center space-x-1.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-glow transition-all active:scale-95"
+              className="flex items-center space-x-1.5 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-glow transition-all active:scale-95"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Report Issue</span>

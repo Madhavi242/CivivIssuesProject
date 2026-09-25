@@ -8,35 +8,50 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#0f172a',
+          50: '#f0f7ff',
+          100: '#e0effe',
+          200: '#b9dffd',
+          300: '#7cc4fa',
+          400: '#36a6f5',
+          500: '#0c8ce9',
+          600: '#026fc7',
+          700: '#0358a1',
+          800: '#074b84',
+          900: '#0c3f6e',
+          950: '#08294a',
         },
         civic: {
-          dark: '#0B0F19',
-          card: '#111827',
-          surface: '#1F2937',
-          border: '#374151',
-          accent: '#06B6D4'
+          bg: '#080c14',
+          card: '#0f172a',
+          surface: '#172238',
+          border: 'rgba(255, 255, 255, 0.08)',
+          accent: '#06B6D4',
+          violet: '#8B5CF6'
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'sans-serif'],
       },
       boxShadow: {
-        'glow': '0 0 20px -5px rgba(59, 130, 246, 0.4)',
-        'glow-accent': '0 0 20px -5px rgba(6, 182, 212, 0.4)',
-        'glow-danger': '0 0 20px -5px rgba(239, 68, 68, 0.4)',
+        'glow': '0 0 25px -4px rgba(59, 130, 246, 0.45)',
+        'glow-cyan': '0 0 25px -4px rgba(6, 182, 212, 0.45)',
+        'glow-violet': '0 0 25px -4px rgba(139, 92, 246, 0.45)',
+        'glow-danger': '0 0 25px -4px rgba(244, 63, 94, 0.45)',
+        'card': '0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        }
       }
     },
   },
   plugins: [],
 }
+
