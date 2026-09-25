@@ -34,16 +34,18 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
 function Footer() {
   return (
-    <footer className="border-t border-slate-900 bg-slate-950 py-10 px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+    <footer className="border-t border-white/[0.06] bg-[#060a10] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span className="font-bold text-slate-300">CivicPulse Platform</span> • Production-Style Civic Technology Hackathon
+        <div className="flex items-center gap-2">
+          <span className="font-display font-extrabold text-white text-sm tracking-tight">CivicPulse</span>
+          <span className="text-slate-600">|</span>
+          <span className="text-slate-400">Intelligent Municipal Operations & Citizen Resolution Platform</span>
         </div>
-        <div className="flex items-center gap-6">
-          <span>MongoDB Atlas</span>
-          <span>Leaflet Maps</span>
-          <span>Multimodal AI Vision</span>
-          <span>Socket.IO Real-time</span>
+        <div className="flex items-center gap-5 text-[11px] text-slate-400 font-medium">
+          <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> ISO-Compliant GIS</span>
+          <span>Neural Triaging</span>
+          <span>Cloud Database</span>
+          <span>Real-Time WebSockets</span>
         </div>
       </div>
     </footer>
