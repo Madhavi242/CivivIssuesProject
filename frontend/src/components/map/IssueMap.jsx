@@ -4,33 +4,32 @@ import L from 'leaflet';
 import { Link } from 'react-router-dom';
 import { PriorityBadge, StatusBadge } from '../common/Badge';
 
-// Helper to create modern glowing SVG marker icons based on priority level
+// Helper to create clean standard circular SVG marker icons
 const createCustomMarker = (priorityLevel = 'Low') => {
-  let color = '#10B981'; // emerald
-  let pulseClass = '';
+  let color = '#2563eb'; // blue
 
   if (priorityLevel === 'Critical') {
-    color = '#EF4444'; // rose
-    pulseClass = 'animate-ping';
+    color = '#dc2626'; // red
   } else if (priorityLevel === 'High') {
-    color = '#F97316'; // orange
+    color = '#ea580c'; // orange
   } else if (priorityLevel === 'Medium') {
-    color = '#F59E0B'; // amber
+    color = '#d97706'; // amber
+  } else if (priorityLevel === 'Low') {
+    color = '#16a34a'; // green
   }
 
   const iconHtml = `
-    <div style="position: relative; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-      <div style="position: absolute; width: 24px; height: 24px; background: ${color}; opacity: 0.3; border-radius: 9999px; transform: scale(1.4);"></div>
-      <div style="position: relative; width: 22px; height: 22px; background: ${color}; border: 2px solid white; border-radius: 9999px; box-shadow: 0 0 10px ${color};"></div>
+    <div style="position: relative; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 22px; height: 22px; background: ${color}; border: 2.5px solid white; border-radius: 9999px; box-shadow: 0 2px 4px rgba(0,0,0,0.25);"></div>
     </div>
   `;
 
   return L.divIcon({
     html: iconHtml,
     className: 'custom-leaflet-marker',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16],
+    iconSize: [26, 26],
+    iconAnchor: [13, 13],
+    popupAnchor: [0, -13],
   });
 };
 
@@ -64,7 +63,7 @@ export default function IssueMap({
   }, [selectedIssueId, issues]);
 
   return (
-    <div style={{ height }} className="w-full rounded-2xl overflow-hidden border border-slate-800 shadow-xl relative z-10">
+    <div style={{ height }} className="w-full rounded-xl overflow-hidden border border-slate-200 shadow-xs relative z-10 bg-slate-100">
       <MapContainer
         center={mapCenter}
         zoom={zoom}
@@ -90,20 +89,20 @@ export default function IssueMap({
                     <PriorityBadge level={issue.priorityLevel} size="xs" />
                     <StatusBadge status={issue.status} size="xs" />
                   </div>
-                  <h4 className="font-bold text-sm text-slate-100 mb-1 leading-snug">
+                  <h4 className="font-semibold text-xs text-slate-900 mb-1 leading-snug">
                     {issue.title}
                   </h4>
-                  <p className="text-xs text-slate-400 mb-2 line-clamp-2">
+                  <p className="text-[11px] text-slate-600 mb-2 line-clamp-2">
                     {issue.description}
                   </p>
-                  <div className="text-[11px] text-slate-400 mb-2">
-                    📍 {issue.address || 'GPS Coordinate'}
+                  <div className="text-[11px] text-slate-500 mb-2">
+                    📍 {issue.address || 'Reported Location'}
                   </div>
                   <Link
                     to={`/issues/${issue._id}`}
-                    className="block text-center text-xs font-semibold py-1.5 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+                    className="block text-center text-xs font-semibold py-1.5 px-3 rounded-md bg-blue-700 hover:bg-blue-800 text-white transition-colors"
                   >
-                    View Details & Timeline →
+                    View Details →
                   </Link>
                 </div>
               </Popup>

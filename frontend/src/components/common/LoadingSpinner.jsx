@@ -3,16 +3,16 @@ import React from 'react';
 export default function LoadingSpinner({ size = 'md', text = 'Loading...' }) {
   const sizeMap = {
     sm: 'w-4 h-4 border-2',
-    md: 'w-8 h-8 border-3',
-    lg: 'w-12 h-12 border-4',
+    md: 'w-7 h-7 border-2',
+    lg: 'w-10 h-10 border-3',
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 space-y-3">
+    <div className="flex flex-col items-center justify-center p-8 space-y-3">
       <div
-        className={`${sizeMap[size] || sizeMap.md} border-blue-500/20 border-t-blue-500 rounded-full animate-spin`}
+        className={`${sizeMap[size] || sizeMap.md} border-slate-200 border-t-blue-700 rounded-full animate-spin`}
       />
-      {text && <p className="text-xs text-slate-400 font-medium tracking-wide">{text}</p>}
+      {text && <p className="text-xs text-slate-500 font-medium">{text}</p>}
     </div>
   );
 }

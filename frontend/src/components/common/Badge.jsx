@@ -30,8 +30,9 @@ export const StatusBadge = ({ status, size = 'sm' }) => {
 
 export const CategoryBadge = ({ category }) => {
   return (
-    <span className="inline-flex items-center text-xs px-2.5 py-1 font-medium rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+    <span className="inline-flex items-center text-xs px-2.5 py-0.5 font-medium rounded bg-slate-100 text-slate-700 border border-slate-200">
       {category}
     </span>
   );
 };
+

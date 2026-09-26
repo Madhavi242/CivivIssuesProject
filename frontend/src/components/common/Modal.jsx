@@ -19,21 +19,22 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-fadeIn">
       <div
-        className={`glass-panel w-full ${maxWidth} rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]`}
+        className={`bg-white w-full ${maxWidth} rounded-xl border border-slate-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh]`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/50">
-          <h3 className="text-lg font-semibold text-white tracking-tight">{title}</h3>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
+          <h3 className="text-base font-bold text-slate-900 tracking-tight">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+            aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="p-6 overflow-y-auto">{children}</div>
+        <div className="p-6 overflow-y-auto text-slate-800">{children}</div>
       </div>
     </div>
   );

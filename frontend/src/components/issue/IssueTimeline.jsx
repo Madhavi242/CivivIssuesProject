@@ -4,39 +4,38 @@ import {
   Clock,
   UserCheck,
   Wrench,
-  AlertCircle,
   FileCheck,
   RotateCcw,
-  Sparkles,
+  FileText,
 } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
 
 const getActionIcon = (action) => {
   switch (action) {
     case 'REPORTED':
-      return <Sparkles className="w-4 h-4 text-blue-400" />;
+      return <FileText className="w-3.5 h-3.5 text-blue-700" />;
     case 'ASSIGNED':
-      return <UserCheck className="w-4 h-4 text-cyan-400" />;
+      return <UserCheck className="w-3.5 h-3.5 text-sky-700" />;
     case 'IN_PROGRESS':
     case 'ACCEPTED':
-      return <Wrench className="w-4 h-4 text-amber-400" />;
+      return <Wrench className="w-3.5 h-3.5 text-amber-600" />;
     case 'RESOLVED':
-      return <CheckCircle2 className="w-4 h-4 text-purple-400" />;
+      return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />;
     case 'CITIZEN_VERIFIED':
     case 'CLOSED':
-      return <FileCheck className="w-4 h-4 text-emerald-400" />;
+      return <FileCheck className="w-3.5 h-3.5 text-slate-700" />;
     case 'CITIZEN_REOPENED':
-      return <RotateCcw className="w-4 h-4 text-rose-400" />;
+      return <RotateCcw className="w-3.5 h-3.5 text-red-600" />;
     default:
-      return <Clock className="w-4 h-4 text-slate-400" />;
+      return <Clock className="w-3.5 h-3.5 text-slate-500" />;
   }
 };
 
 export default function IssueTimeline({ updates = [] }) {
   if (!updates || updates.length === 0) {
     return (
-      <div className="text-center py-6 text-xs text-slate-500">
-        No lifecycle status updates recorded yet.
+      <div className="text-center py-6 text-xs text-slate-500 bg-slate-50 rounded-lg border border-slate-200">
+        No status updates recorded yet.
       </div>
     );
   }
@@ -44,7 +43,7 @@ export default function IssueTimeline({ updates = [] }) {
   const API_HOST = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
   return (
-    <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-800">
+    <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
       {updates.map((update, idx) => {
         const isLatest = idx === updates.length - 1;
         const evidenceUrl = update.evidence?.fileUrl
@@ -54,40 +53,40 @@ export default function IssueTimeline({ updates = [] }) {
           : null;
 
         return (
-          <div key={update._id || idx} className="relative group">
+          <div key={update._id || idx} className="relative">
             {/* Step Marker Dot */}
             <div
-              className={`absolute -left-6 top-1 w-5 h-5 rounded-full border flex items-center justify-center bg-slate-900 ${
+              className={`absolute -left-6 top-1 w-5 h-5 rounded-full border flex items-center justify-center bg-white ${
                 isLatest
-                  ? 'border-blue-500 shadow-glow'
-                  : 'border-slate-700'
+                  ? 'border-blue-600 shadow-xs'
+                  : 'border-slate-300'
               }`}
             >
               {getActionIcon(update.action)}
             </div>
 
             {/* Content Card */}
-            <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 space-y-1.5 transition-colors hover:border-slate-700">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 space-y-1.5">
               <div className="flex items-center justify-between gap-2">
-                <span className="font-semibold text-xs text-slate-200">
-                  {update.action.replace('_', ' ')}
+                <span className="font-semibold text-xs text-slate-900">
+                  {update.action.replace(/_/g, ' ')}
                 </span>
-                <span className="text-[10px] text-slate-500 font-mono">
+                <span className="text-[11px] text-slate-500">
                   {formatDate(update.createdAt)}
                 </span>
               </div>
 
               {update.comment && (
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-700 leading-relaxed">
                   {update.comment}
                 </p>
               )}
 
-              {/* Author pill */}
-              <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-                <span>By: {update.updatedBy?.name || 'System'}</span>
+              {/* Author and Status pill */}
+              <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
+                <span>Updated by: <strong className="text-slate-700 font-medium">{update.updatedBy?.name || 'System'}</strong></span>
                 {update.newStatus && (
-                  <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-medium border border-slate-700">
+                  <span className="px-2 py-0.5 rounded bg-white text-slate-700 text-[10px] font-medium border border-slate-200">
                     Status: {update.newStatus}
                   </span>
                 )}
@@ -95,12 +94,12 @@ export default function IssueTimeline({ updates = [] }) {
 
               {/* Optional embedded evidence photo thumbnail */}
               {evidenceUrl && (
-                <div className="mt-2 pt-2 border-t border-slate-800">
-                  <div className="text-[10px] text-slate-400 mb-1 font-medium">Work Evidence:</div>
+                <div className="mt-2 pt-2 border-t border-slate-200">
+                  <div className="text-[11px] text-slate-600 mb-1 font-medium">Work Evidence Attached:</div>
                   <img
                     src={evidenceUrl}
                     alt="Resolution Evidence"
-                    className="w-32 h-20 object-cover rounded-lg border border-slate-700"
+                    className="w-36 h-24 object-cover rounded-md border border-slate-200"
                   />
                 </div>
               )}

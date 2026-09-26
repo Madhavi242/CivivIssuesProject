@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Activity,
-  ShieldCheck,
-  Zap,
+  FileText,
   MapPin,
-  Sparkles,
-  Layers,
-  ArrowRight,
   CheckCircle,
-  FileCheck,
-  TrendingUp,
-  Users,
-  Compass,
-  Camera,
-  Cpu,
-  Workflow,
   Clock,
-  ThumbsUp,
   AlertTriangle,
   Building2,
   Wrench,
-  UserCheck
+  UserCheck,
+  ShieldCheck,
+  Camera,
+  Layers,
+  ArrowRight,
+  Shield,
+  HelpCircle
 } from 'lucide-react';
 import { issueApi } from '../services/issueApi';
 import { adminApi } from '../services/adminApi';
@@ -35,10 +28,10 @@ export default function Home() {
   const navigate = useNavigate();
   const [recentIssues, setRecentIssues] = useState([]);
   const [stats, setStats] = useState({
-    totalIssues: 6,
-    openIssues: 3,
-    resolvedIssues: 3,
-    criticalIssues: 3,
+    totalIssues: 0,
+    openIssues: 0,
+    resolvedIssues: 0,
+    criticalIssues: 0,
   });
 
   useEffect(() => {
@@ -70,300 +63,225 @@ export default function Home() {
       case 'field_worker': return Wrench;
       case 'department_admin': return Building2;
       case 'system_admin': return ShieldCheck;
-      default: return Users;
+      default: return FileText;
     }
   };
 
   return (
-    <div className="space-y-24 pb-24 relative overflow-hidden">
-      
-      {/* Background Lighting Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-blue-600/15 via-cyan-500/10 to-transparent blur-[140px] pointer-events-none -z-10" />
-
+    <div className="space-y-12 pb-16">
       {/* Hero Section */}
-      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          {/* Platform Status Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-semibold text-cyan-300 mb-8 shadow-glow-cyan">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>Autonomous Civic Operations • Smart Infrastructure Intelligence</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1]">
-            Transforming City Issues into <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent">
-              Verified Real-Time Solutions
-            </span>
-          </h1>
-
-          <p className="mt-7 text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
-            Eliminate traditional municipal complaint blind spots with multimodal AI vision, automated duplicate report suppression, geospatial clustering, and photo-verified citizen resolution.
-          </p>
-
-          {/* Main Action Buttons */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/report"
-              className="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-sm px-8 py-4 rounded-2xl shadow-glow transition-all active:scale-95 flex items-center gap-2.5 group"
-            >
-              <span>Report Community Issue</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              to="/issues"
-              className="glass-panel hover:bg-slate-800/80 border border-white/10 text-slate-200 font-bold text-sm px-8 py-4 rounded-2xl transition-all flex items-center gap-2.5"
-            >
-              <Compass className="w-4 h-4 text-cyan-400" />
-              <span>Explore Live GIS Map</span>
-            </Link>
-          </div>
-
-          {/* Role Quick-Access Showcase */}
-          <div className="mt-16 p-5 sm:p-6 max-w-3xl mx-auto glass-panel rounded-3xl border border-white/10 shadow-2xl relative">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center justify-center gap-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>Explore The Multi-Role Municipal Ecosystem</span>
+      <section className="bg-white border-b border-slate-200 py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-700 mb-4">
+              <span>Official City Service Portal</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {DEMO_ACCOUNTS.map((acc) => {
-                const Icon = getRoleIcon(acc.role);
-                return (
-                  <button
-                    key={acc.role}
-                    onClick={() => handlePersonaClick(acc.role)}
-                    className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between gap-2 transition-all hover:scale-105 active:scale-95 group cursor-pointer ${acc.color}`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <div className="p-1.5 rounded-lg bg-white/10">
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <span className="text-[10px] opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all">→</span>
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-white">{acc.badge}</div>
-                      <div className="text-[10px] text-slate-300 font-normal truncate mt-0.5">{acc.label}</div>
-                    </div>
-                  </button>
-                );
-              })}
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
+              Report and Track City Issues in Your Neighborhood
+            </h1>
+
+            <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+              CivicPulse connects citizens directly with municipal departments to fix potholes, streetlight outages, garbage accumulation, and water leaks quickly and transparently.
+            </p>
+
+            {/* Main Action Buttons */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                to="/report"
+                className="bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm px-6 py-3 rounded-lg shadow-xs transition-colors inline-flex items-center gap-2"
+              >
+                <span>Report an Issue</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                to="/issues"
+                className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm px-6 py-3 rounded-lg border border-slate-300 transition-colors inline-flex items-center gap-2"
+              >
+                <MapPin className="w-4 h-4 text-slate-600" />
+                <span>Browse All Reports</span>
+              </Link>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* Live Metric Counters */}
+      {/* Metrics Summary Counters */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="glass-panel p-6 rounded-3xl border border-white/10 text-center relative overflow-hidden group">
-            <div className="text-3xl sm:text-4xl font-display font-extrabold text-white">{stats.totalIssues}</div>
-            <div className="text-xs text-slate-400 font-medium mt-1">Total Reported Incidents</div>
-            <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-cyan-400 font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Real-time GIS feed
+          <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
+              <span className="text-xs font-medium uppercase tracking-wider">Total Reports</span>
+              <FileText className="w-4 h-4 text-blue-700" />
             </div>
-          </div>
-          
-          <div className="glass-panel p-6 rounded-3xl border border-rose-500/30 text-center relative overflow-hidden group">
-            <div className="text-3xl sm:text-4xl font-display font-extrabold text-rose-400">{stats.criticalIssues}</div>
-            <div className="text-xs text-slate-400 font-medium mt-1">Critical Priority Hazards</div>
-            <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-rose-400 font-semibold">
-              <AlertTriangle className="w-3.5 h-3.5" /> High public safety score
-            </div>
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900">{stats.totalIssues}</div>
+            <div className="text-xs text-slate-500 mt-1">Logged in system</div>
           </div>
 
-          <div className="glass-panel p-6 rounded-3xl border border-amber-500/30 text-center relative overflow-hidden group">
-            <div className="text-3xl sm:text-4xl font-display font-extrabold text-amber-400">{stats.openIssues}</div>
-            <div className="text-xs text-slate-400 font-medium mt-1">Active Field Assignments</div>
-            <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-amber-400 font-semibold">
-              <Clock className="w-3.5 h-3.5" /> Crew in dispatch
+          <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
+              <span className="text-xs font-medium uppercase tracking-wider">In Progress</span>
+              <Clock className="w-4 h-4 text-amber-600" />
             </div>
+            <div className="text-2xl sm:text-3xl font-bold text-amber-600">{stats.openIssues}</div>
+            <div className="text-xs text-slate-500 mt-1">Assigned to field crews</div>
           </div>
 
-          <div className="glass-panel p-6 rounded-3xl border border-emerald-500/30 text-center relative overflow-hidden group">
-            <div className="text-3xl sm:text-4xl font-display font-extrabold text-emerald-400">{stats.resolvedIssues}</div>
-            <div className="text-xs text-slate-400 font-medium mt-1">Verified Community Fixes</div>
-            <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-emerald-400 font-semibold">
-              <CheckCircle className="w-3.5 h-3.5" /> Citizen confirmed
+          <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
+              <span className="text-xs font-medium uppercase tracking-wider">Resolved</span>
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
             </div>
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-600">{stats.resolvedIssues}</div>
+            <div className="text-xs text-slate-500 mt-1">Verified resolutions</div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
+              <span className="text-xs font-medium uppercase tracking-wider">Critical Priority</span>
+              <AlertTriangle className="w-4 h-4 text-red-600" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold text-red-600">{stats.criticalIssues}</div>
+            <div className="text-xs text-slate-500 mt-1">High public safety impact</div>
           </div>
         </div>
       </section>
 
-      {/* How CivicPulse Works (Interactive 4-Step Architecture) */}
+      {/* 4-Step Resolution Process */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-3">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>Autonomous Intelligence Workflow</span>
+        <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-xs">
+          <div className="mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              How Issue Resolution Works
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+              Transparent, accountable complaint management from citizen report to verified fix.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-            How CivicPulse Powers Municipal Agility
-          </h2>
-          <p className="mt-3 text-sm text-slate-400">
-            From mobile snapshot to verified repair in four automated, transparent steps.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            {
-              step: '01',
-              title: 'Multimodal Snap & Pin',
-              desc: 'Citizen captures a photo with GPS coordinates. AI vision scans hazard severity and classifies the category.',
-              icon: Camera,
-              color: 'text-cyan-400',
-              border: 'border-cyan-500/30',
-            },
-            {
-              step: '02',
-              title: 'Duplicate Suppression',
-              desc: 'Geospatial algorithms detect identical issues within radius and merge upvotes to eliminate duplicate municipal tickets.',
-              icon: Layers,
-              color: 'text-blue-400',
-              border: 'border-blue-500/30',
-            },
-            {
-              step: '03',
-              title: 'Smart Dispatch & Routing',
-              desc: 'Nearest qualified field technicians receive real-time routing based on live workload and geographic clustering.',
-              icon: Workflow,
-              color: 'text-violet-400',
-              border: 'border-violet-500/30',
-            },
-            {
-              step: '04',
-              title: 'Photo-Verified Resolution',
-              desc: 'Field worker uploads after-repair proof. Original reporting citizens verify and rate the fix before ticket closes.',
-              icon: ShieldCheck,
-              color: 'text-emerald-400',
-              border: 'border-emerald-500/30',
-            },
-          ].map((card, idx) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={idx}
-                className={`glass-panel p-6 rounded-3xl border ${card.border} space-y-4 hover:-translate-y-1 transition-all duration-300 relative`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className={`w-10 h-10 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center ${card.color}`}>
-                    <Icon className="w-5 h-5" />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              {
+                step: '1',
+                title: 'Report an Issue',
+                desc: 'Upload a photo, describe the issue, and select the location on the map.',
+                icon: Camera,
+              },
+              {
+                step: '2',
+                title: 'Department Triaging',
+                desc: 'Complaints are categorized and routed to Roads, Sanitation, Water, or Electrical.',
+                icon: Layers,
+              },
+              {
+                step: '3',
+                title: 'Field Crew Dispatch',
+                desc: 'Qualified technicians are dispatched with clear job tasks and timelines.',
+                icon: Wrench,
+              },
+              {
+                step: '4',
+                title: 'Citizen Verification',
+                desc: 'After work is done with photo proof, reporting citizens verify and rate the fix.',
+                icon: ShieldCheck,
+              },
+            ].map((card) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={card.step}
+                  className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center font-semibold text-sm">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-400">Step {card.step}</span>
                   </div>
-                  <span className="text-xl font-display font-black text-slate-600">{card.step}</span>
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">{card.title}</h3>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">{card.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-white font-display">{card.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mt-2">{card.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Problem vs Solution Comparison */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl font-display font-bold text-white">
-            Transforming Municipal Governance
-          </h2>
-          <p className="mt-2 text-sm text-slate-400">
-            A radical departure from slow, opaque, manual complaint portals.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Traditional Limitations */}
-          <div className="glass-panel p-8 rounded-3xl border border-rose-500/20 space-y-5">
-            <div className="flex items-center gap-2 text-rose-400 font-bold text-base font-display">
-              <span>Traditional Municipal Portals</span>
-            </div>
-            <ul className="space-y-3 text-xs text-slate-400">
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 font-bold bg-rose-500/10 w-5 h-5 rounded-full flex items-center justify-center shrink-0">✕</span>
-                <span>Manual issue categorization leading to misrouted complaints and delayed SLA</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 font-bold bg-rose-500/10 w-5 h-5 rounded-full flex items-center justify-center shrink-0">✕</span>
-                <span>Dozens of redundant duplicate tickets for the same physical road hazard</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 font-bold bg-rose-500/10 w-5 h-5 rounded-full flex items-center justify-center shrink-0">✕</span>
-                <span>No spatial heat maps, resulting in disorganized field technician travel</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 font-bold bg-rose-500/10 w-5 h-5 rounded-full flex items-center justify-center shrink-0">✕</span>
-                <span>Weak resolution verification; tickets closed internally without citizen consent</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* CivicPulse Innovation */}
-          <div className="glass-panel p-8 rounded-3xl border border-emerald-500/30 space-y-5 shadow-glow">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold text-base font-display">
-              <span>CivicPulse Platform Solution</span>
-            </div>
-            <ul className="space-y-3 text-xs text-slate-300">
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Multimodal AI suggestions: Image, description, and hazard parameters classified instantly</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Automated duplicate detection with 1-click citizen upvote & social confirmation</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Intelligent geospatial clustering to batch nearby repair jobs for maximum efficiency</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Citizen-powered verification: Community confirms resolution before issue is closed</span>
-              </li>
-            </ul>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Interactive Map Preview */}
+      {/* Role Switcher Demo Box */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="bg-slate-100 p-6 rounded-xl border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <h2 className="text-base font-bold text-slate-900">Explore Portal by User Role</h2>
+              <p className="text-xs text-slate-600">Quick-switch demo personas to test each workflow.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {DEMO_ACCOUNTS.map((acc) => {
+              const Icon = getRoleIcon(acc.role);
+              return (
+                <button
+                  key={acc.role}
+                  onClick={() => handlePersonaClick(acc.role)}
+                  className={`p-3.5 rounded-lg border text-left flex flex-col justify-between gap-2 bg-white transition-all hover:border-slate-400 hover:shadow-xs ${acc.color}`}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className="p-1.5 rounded bg-slate-100 text-slate-700">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs text-slate-400">→</span>
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900">{acc.badge}</div>
+                    <div className="text-[11px] text-slate-600 truncate mt-0.5">{acc.label}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Live Map Preview Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">Live Geolocation Intelligence</h2>
-            <p className="text-xs text-slate-400 mt-1">Real-time incident pins and spatial severity heat map.</p>
+            <h2 className="text-xl font-bold text-slate-900">City Issue Map</h2>
+            <p className="text-xs text-slate-600 mt-0.5">Geographic view of open and resolved community complaints.</p>
           </div>
           <Link
             to="/map"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+            className="text-xs font-semibold text-blue-700 hover:text-blue-800 flex items-center gap-1 transition-colors"
           >
-            <span>Full Map Explorer</span>
+            <span>Open Full Map</span>
             <span>→</span>
           </Link>
         </div>
-        <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-          <IssueMap issues={recentIssues} height="440px" />
+        <div className="rounded-xl overflow-hidden border border-slate-200 shadow-xs bg-white">
+          <IssueMap issues={recentIssues} height="400px" />
         </div>
       </section>
 
       {/* Recent Issues Feed */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">Recent Civic Reports</h2>
-            <p className="text-xs text-slate-400 mt-1">Actively tracked issues in your municipal zone.</p>
+            <h2 className="text-xl font-bold text-slate-900">Recent Reports</h2>
+            <p className="text-xs text-slate-600 mt-0.5">Latest community issues submitted by residents.</p>
           </div>
           <Link
             to="/issues"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+            className="text-xs font-semibold text-blue-700 hover:text-blue-800 flex items-center gap-1 transition-colors"
           >
-            <span>View All ({stats.totalIssues})</span>
+            <span>View All Reports</span>
             <span>→</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {recentIssues.map((issue) => (
             <IssueCard key={issue._id} issue={issue} />
           ))}
@@ -372,4 +290,3 @@ export default function Home() {
     </div>
   );
 }
-

@@ -8,14 +8,13 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { BarChart3, PieChart as PieIcon, TrendingUp, ShieldCheck, CheckCircle } from 'lucide-react';
+import { BarChart3, PieChart as PieIcon, TrendingUp, ShieldCheck } from 'lucide-react';
 import { adminApi } from '../services/adminApi';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
-const COLORS = ['#3B82F6', '#06B6D4', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'];
+const COLORS = ['#2563eb', '#0284c7', '#0d9488', '#d97706', '#dc2626', '#7c3aed', '#db2777'];
 
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState(null);
@@ -44,65 +43,65 @@ export default function AnalyticsPage() {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner text="Computing real-time analytics from MongoDB Atlas..." />;
+    return <LoadingSpinner text="Computing civic telemetry & analytics..." />;
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-          <BarChart3 className="w-8 h-8 text-blue-400" />
-          <span>Municipal Civic Telemetry & Analytics</span>
+      <div className="pb-4 border-b border-slate-200">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+          <BarChart3 className="w-7 h-7 text-blue-700" />
+          <span>Municipal Telemetry & Analytics</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
-          Live analytics compiled from MongoDB Atlas issues, department dispatches, and citizen verification feedback.
+        <p className="text-xs sm:text-sm text-slate-600 mt-1">
+          Public metrics compiled from reported issues, department dispatches, and citizen verification.
         </p>
       </div>
 
       {/* Top Metrics Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
-          <div className="text-xs text-slate-400">Total Tracked Complaints</div>
-          <div className="text-2xl sm:text-3xl font-black text-white mt-1">
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Total Complaints</div>
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
             {stats?.totalIssues || 0}
           </div>
-          <div className="text-[10px] text-blue-400 mt-1">Multimodal submissions</div>
+          <div className="text-[11px] text-slate-500 mt-1">Logged across all zones</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-rose-500/20 text-center">
-          <div className="text-xs text-rose-400">Critical Hazards</div>
-          <div className="text-2xl sm:text-3xl font-black text-rose-400 mt-1">
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Critical Hazards</div>
+          <div className="text-2xl sm:text-3xl font-bold text-red-600 mt-1">
             {stats?.criticalIssues || 0}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Priority Engine flags</div>
+          <div className="text-[11px] text-slate-500 mt-1">High public safety flags</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-amber-500/20 text-center">
-          <div className="text-xs text-amber-400">Avg Resolution Speed</div>
-          <div className="text-2xl sm:text-3xl font-black text-amber-400 mt-1">
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Avg Resolution Time</div>
+          <div className="text-2xl sm:text-3xl font-bold text-amber-600 mt-1">
             {stats?.avgResolutionHours || 18.5}h
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Department dispatch SLA</div>
+          <div className="text-[11px] text-slate-500 mt-1">Department dispatch SLA</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-emerald-500/20 text-center">
-          <div className="text-xs text-emerald-400">Resolved & Closed</div>
-          <div className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Resolved & Closed</div>
+          <div className="text-2xl sm:text-3xl font-bold text-emerald-600 mt-1">
             {(stats?.resolvedIssues || 0) + (stats?.closedIssues || 0)}
           </div>
-          <div className="text-[10px] text-emerald-400/80 mt-1">Citizen verified</div>
+          <div className="text-[11px] text-emerald-600 font-medium mt-1">Citizen verified</div>
         </div>
       </div>
 
       {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart 1: Issues by Category */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <PieIcon className="w-4 h-4 text-cyan-400" />
-            <span>Civic Issues by Category</span>
-          </h3>
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-3">
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <PieIcon className="w-4 h-4 text-blue-700" />
+            <span>Complaints by Category</span>
+          </h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -120,7 +119,13 @@ export default function AnalyticsPage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.75rem', fontSize: '12px' }}
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    borderColor: '#cbd5e1',
+                    borderRadius: '0.5rem',
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -128,26 +133,32 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Chart 2: Issues by Priority Level */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-amber-400" />
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-3">
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-amber-600" />
             <span>Issues by Priority Severity</span>
-          </h3>
+          </h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={analytics?.byPriority || []}>
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} />
-                <YAxis stroke="#94a3b8" fontSize={11} />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
+                <YAxis stroke="#64748b" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.75rem', fontSize: '12px' }}
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    borderColor: '#cbd5e1',
+                    borderRadius: '0.5rem',
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  }}
                 />
-                <Bar dataKey="value" fill="#3B82F6" radius={[6, 6, 0, 0]}>
+                <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]}>
                   {(analytics?.byPriority || []).map((entry, index) => {
-                    let barColor = '#3B82F6';
-                    if (entry.name === 'Critical') barColor = '#EF4444';
-                    if (entry.name === 'High') barColor = '#F97316';
-                    if (entry.name === 'Medium') barColor = '#F59E0B';
-                    if (entry.name === 'Low') barColor = '#10B981';
+                    let barColor = '#2563eb';
+                    if (entry.name === 'Critical') barColor = '#dc2626';
+                    if (entry.name === 'High') barColor = '#ea580c';
+                    if (entry.name === 'Medium') barColor = '#d97706';
+                    if (entry.name === 'Low') barColor = '#16a34a';
                     return <Cell key={`cell-${index}`} fill={barColor} />;
                   })}
                 </Bar>
@@ -157,40 +168,52 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Chart 3: Issues by Municipal Zone */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-3">
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-emerald-600" />
             <span>Issue Distribution by Municipal Zone</span>
-          </h3>
+          </h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={analytics?.byZone || []} layout="vertical">
-                <XAxis type="number" stroke="#94a3b8" fontSize={11} />
-                <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={10} width={100} />
+                <XAxis type="number" stroke="#64748b" fontSize={11} />
+                <YAxis dataKey="name" type="category" stroke="#64748b" fontSize={10} width={100} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.75rem', fontSize: '12px' }}
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    borderColor: '#cbd5e1',
+                    borderRadius: '0.5rem',
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  }}
                 />
-                <Bar dataKey="value" fill="#06B6D4" radius={[0, 6, 6, 0]} />
+                <Bar dataKey="value" fill="#0284c7" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Chart 4: Department Workforce Workload Distribution */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-purple-400" />
-            <span>Active Department Workload (Tasks in Field)</span>
-          </h3>
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-3">
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Active Department Workload</span>
+          </h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={analytics?.departmentWorkload || []}>
-                <XAxis dataKey="code" stroke="#94a3b8" fontSize={11} />
-                <YAxis stroke="#94a3b8" fontSize={11} />
+                <XAxis dataKey="code" stroke="#64748b" fontSize={11} />
+                <YAxis stroke="#64748b" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.75rem', fontSize: '12px' }}
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    borderColor: '#cbd5e1',
+                    borderRadius: '0.5rem',
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  }}
                 />
-                <Bar dataKey="totalWorkload" fill="#8B5CF6" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="totalWorkload" fill="#4f46e5" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

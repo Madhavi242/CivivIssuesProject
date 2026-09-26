@@ -5,10 +5,8 @@ import {
   Clock,
   MapPin,
   AlertTriangle,
-  UploadCloud,
   ArrowRight,
-  ShieldCheck,
-  Check,
+  User
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { assignmentApi } from '../services/assignmentApi';
@@ -82,81 +80,81 @@ export default function FieldWorkerDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Field Technician Console
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            Field Worker Console
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Logged in as <span className="text-cyan-400 font-semibold">{user?.name}</span> • Department: {user?.department?.name || 'Municipal Works'}
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            Logged in as <span className="font-semibold text-slate-900">{user?.name}</span> • Department: {user?.department?.name || 'Public Works'}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Duty Status: Active & Dispatchable</span>
+          <span className="text-xs px-3 py-1.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-600" />
+            <span>Duty Status: Active</span>
           </span>
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-          <div className="text-xs text-slate-400 font-medium">Assigned Tasks</div>
-          <div className="text-2xl font-black text-white mt-1">{assignedIssues.length}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Current Active Load</div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Assigned Issues</div>
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">{assignedIssues.length}</div>
+          <div className="text-[11px] text-slate-500 mt-1">Total active workload</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-rose-500/20">
-          <div className="text-xs text-slate-400 font-medium">Critical Emergencies</div>
-          <div className="text-2xl font-black text-rose-400 mt-1">{criticalTasks.length}</div>
-          <div className="text-[11px] text-rose-400/80 mt-1">High Safety Hazards</div>
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Critical Priority</div>
+          <div className="text-2xl sm:text-3xl font-bold text-red-600 mt-1">{criticalTasks.length}</div>
+          <div className="text-[11px] text-slate-500 mt-1">High safety urgency</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-amber-500/20">
-          <div className="text-xs text-slate-400 font-medium">Work In Progress</div>
-          <div className="text-2xl font-black text-amber-400 mt-1">{inProgressTasks.length}</div>
-          <div className="text-[11px] text-amber-400/80 mt-1">Field Crews Deployed</div>
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">In Progress</div>
+          <div className="text-2xl sm:text-3xl font-bold text-amber-600 mt-1">{inProgressTasks.length}</div>
+          <div className="text-[11px] text-slate-500 mt-1">Under field repair</div>
         </div>
 
-        <div className="glass-panel p-5 rounded-2xl border border-emerald-500/20">
-          <div className="text-xs text-slate-400 font-medium">Resolved / Awaiting Review</div>
-          <div className="text-2xl font-black text-emerald-400 mt-1">{resolvedTasks.length}</div>
-          <div className="text-[11px] text-emerald-400/80 mt-1">Resolution Evidence Sent</div>
+        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+          <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Completed / Resolved</div>
+          <div className="text-2xl sm:text-3xl font-bold text-emerald-600 mt-1">{resolvedTasks.length}</div>
+          <div className="text-[11px] text-slate-500 mt-1">Evidence submitted</div>
         </div>
       </div>
 
       {/* Map of Assigned Tasks */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-cyan-400" />
-            <span>Assigned Dispatch GPS Locations</span>
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-blue-700" />
+            <span>Assigned Dispatch Map</span>
           </h2>
-          <span className="text-xs text-slate-400">Bangalore Zone</span>
+          <span className="text-xs text-slate-500">{assignedIssues.length} location(s)</span>
         </div>
-        <IssueMap issues={assignedIssues} height="360px" />
+        <IssueMap issues={assignedIssues} height="320px" />
       </div>
 
-      {/* Task Queue List */}
+      {/* Assigned Issues Task List */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Wrench className="w-5 h-5 text-cyan-400" />
-            <span>Assigned Tasks Queue & Work Actions</span>
+          <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <Wrench className="w-5 h-5 text-slate-700" />
+            <span>Assigned Issues & Work Actions</span>
           </h2>
-          <span className="text-xs text-slate-400">{assignedIssues.length} assigned</span>
+          <span className="text-xs text-slate-500">{assignedIssues.length} assigned task(s)</span>
         </div>
 
         {loading ? (
           <LoadingSpinner text="Fetching assigned work orders..." />
         ) : assignedIssues.length === 0 ? (
-          <div className="glass-panel p-8 rounded-2xl border border-slate-800 text-center text-xs text-slate-400">
-            No pending tasks assigned right now. You are ready for new dispatches.
+          <div className="bg-white p-8 rounded-lg border border-slate-200 text-center text-xs text-slate-500">
+            No pending tasks assigned right now. You are ready for new field assignments.
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {assignedIssues.map((issue) => {
               const isAssigned = issue.status === 'Assigned' || issue.status === 'Accepted';
               const isInProgress = issue.status === 'In Progress';
@@ -165,9 +163,9 @@ export default function FieldWorkerDashboard() {
               return (
                 <div
                   key={issue._id}
-                  className="glass-card rounded-2xl border border-slate-800 p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 transition-all hover:border-slate-700"
+                  className="bg-white rounded-lg border border-slate-200 shadow-xs p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 transition-colors hover:border-slate-300"
                 >
-                  <div className="space-y-2 flex-1">
+                  <div className="space-y-1.5 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <PriorityBadge level={issue.priorityLevel} />
                       <StatusBadge status={issue.status} />
@@ -175,16 +173,16 @@ export default function FieldWorkerDashboard() {
                     </div>
 
                     <Link to={`/issues/${issue._id}`}>
-                      <h3 className="text-base font-bold text-white hover:text-blue-400 transition-colors">
+                      <h3 className="text-base font-bold text-slate-900 hover:text-blue-700 transition-colors">
                         {issue.title}
                       </h3>
                     </Link>
 
-                    <p className="text-xs text-slate-400 line-clamp-2">
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                       {issue.description}
                     </p>
 
-                    <div className="flex items-center gap-3 text-xs text-slate-400 pt-1">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 pt-1">
                       <span>📍 {issue.address || 'GPS Coordinates'}</span>
                       <span>•</span>
                       <span>Reporter: {issue.reportedBy?.name || 'Citizen'}</span>
@@ -196,7 +194,7 @@ export default function FieldWorkerDashboard() {
                     {isAssigned && (
                       <button
                         onClick={() => handleOpenActionModal(issue, 'In Progress')}
-                        className="flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs transition-colors shadow-sm"
+                        className="flex items-center justify-center gap-1.5 py-2 px-4 rounded-md bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-xs"
                       >
                         <Wrench className="w-3.5 h-3.5" />
                         <span>Start Work (In Progress)</span>
@@ -206,7 +204,7 @@ export default function FieldWorkerDashboard() {
                     {isInProgress && (
                       <button
                         onClick={() => handleOpenActionModal(issue, 'Resolved')}
-                        className="flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition-colors shadow-glow"
+                        className="flex items-center justify-center gap-1.5 py-2 px-4 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-semibold text-xs transition-colors shadow-xs"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Upload Proof & Mark Resolved</span>
@@ -214,14 +212,14 @@ export default function FieldWorkerDashboard() {
                     )}
 
                     {isResolved && (
-                      <div className="text-center py-1.5 px-3 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20">
+                      <div className="text-center py-1.5 px-3 rounded-md bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
                         ✓ Work Complete
                       </div>
                     )}
 
                     <Link
                       to={`/issues/${issue._id}`}
-                      className="text-center py-2 px-4 rounded-xl border border-slate-700 bg-slate-850 hover:bg-slate-800 text-slate-300 text-xs font-medium transition-colors"
+                      className="text-center py-2 px-4 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition-colors"
                     >
                       View Details & Timeline
                     </Link>

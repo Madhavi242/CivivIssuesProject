@@ -51,54 +51,55 @@ export default function SystemAdminDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Shield className="w-8 h-8 text-purple-400" />
-            <span>Platform Governance & System Administration</span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+            <Shield className="w-7 h-7 text-blue-700" />
+            <span>Platform Governance & Administration</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Global system monitoring, role permissions, municipal departments, and audit trails.
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            Global system monitoring, user accounts, municipal departments, and audit logs.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-xl p-1 text-xs font-semibold">
+        {/* Clean Tab Navigation */}
+        <div className="flex items-center bg-slate-100 border border-slate-300 rounded-lg p-1 text-xs font-medium">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-md transition-colors ${
               activeTab === 'overview'
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Overview
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-md transition-colors ${
               activeTab === 'users'
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Users ({users.length})
           </button>
           <button
             onClick={() => setActiveTab('departments')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-md transition-colors ${
               activeTab === 'departments'
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Departments ({departments.length})
           </button>
           <button
             onClick={() => setActiveTab('audit')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-md transition-colors ${
               activeTab === 'audit'
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Audit Trail
@@ -115,49 +116,49 @@ export default function SystemAdminDashboard() {
             <div className="space-y-6">
               {/* Metric Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-                  <div className="text-xs text-slate-400 font-medium">Total Registered Users</div>
-                  <div className="text-2xl font-black text-white mt-1">{stats?.totalUsers || 0}</div>
-                  <div className="text-[11px] text-blue-400 mt-1">Citizens & Field Teams</div>
+                <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+                  <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Registered Users</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">{stats?.totalUsers || 0}</div>
+                  <div className="text-[11px] text-slate-500 mt-1">Citizens & staff</div>
                 </div>
 
-                <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-                  <div className="text-xs text-slate-400 font-medium">Active Municipal Departments</div>
-                  <div className="text-2xl font-black text-cyan-400 mt-1">{stats?.totalDepartments || 5}</div>
-                  <div className="text-[11px] text-slate-400 mt-1">Cross-sector jurisdiction</div>
+                <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+                  <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Municipal Departments</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-700 mt-1">{stats?.totalDepartments || 5}</div>
+                  <div className="text-[11px] text-slate-500 mt-1">Cross-sector jurisdiction</div>
                 </div>
 
-                <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-                  <div className="text-xs text-slate-400 font-medium">Average SLA Resolution Time</div>
-                  <div className="text-2xl font-black text-amber-400 mt-1">
+                <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+                  <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Avg SLA Resolution</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-amber-600 mt-1">
                     {stats?.avgResolutionHours || 18.5} hrs
                   </div>
-                  <div className="text-[11px] text-emerald-400 mt-1">Within standard targets</div>
+                  <div className="text-[11px] text-emerald-600 font-medium mt-1">Within standard targets</div>
                 </div>
 
-                <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-                  <div className="text-xs text-slate-400 font-medium">Total Issues Processed</div>
-                  <div className="text-2xl font-black text-purple-400 mt-1">{stats?.totalIssues || 0}</div>
-                  <div className="text-[11px] text-slate-400 mt-1">Across 4 municipal zones</div>
+                <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs">
+                  <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Total Issues Handled</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">{stats?.totalIssues || 0}</div>
+                  <div className="text-[11px] text-slate-500 mt-1">All municipal zones</div>
                 </div>
               </div>
 
               {/* Department Overview Cards */}
               <div>
-                <h3 className="text-base font-bold text-white mb-3">Jurisdictional Departments</h3>
+                <h2 className="text-base font-bold text-slate-900 mb-3">Jurisdictional Departments</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {departments.map((dept) => (
-                    <div key={dept._id} className="glass-panel p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div key={dept._id} className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-white">{dept.name}</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">
+                        <span className="font-bold text-xs text-slate-900">{dept.name}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-200 font-semibold">
                           {dept.code}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400 line-clamp-2">{dept.description}</p>
-                      <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-800 flex justify-between">
-                        <span>SLA: {dept.slaHours}h</span>
-                        <span>Contact: {dept.contactPhone}</span>
+                      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">{dept.description}</p>
+                      <div className="text-[11px] text-slate-500 pt-2 border-t border-slate-100 flex justify-between">
+                        <span>Target SLA: <strong className="text-slate-800">{dept.slaHours}h</strong></span>
+                        <span>Helpline: {dept.contactPhone}</span>
                       </div>
                     </div>
                   ))}
@@ -168,44 +169,44 @@ export default function SystemAdminDashboard() {
 
           {/* TAB 2: USERS */}
           {activeTab === 'users' && (
-            <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
-              <div className="p-4 border-b border-slate-800 flex justify-between items-center">
-                <h3 className="text-sm font-bold text-white">System User Accounts</h3>
-                <span className="text-xs text-slate-400">{users.length} registered accounts</span>
+            <div className="bg-white rounded-lg border border-slate-200 shadow-xs overflow-hidden">
+              <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h2 className="text-sm font-bold text-slate-900">User Accounts Directory</h2>
+                <span className="text-xs text-slate-500">{users.length} registered accounts</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-900/80 text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                  <thead className="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-200">
                     <tr>
-                      <th className="px-4 py-3">Name</th>
-                      <th className="px-4 py-3">Email</th>
-                      <th className="px-4 py-3">Role</th>
-                      <th className="px-4 py-3">Department</th>
-                      <th className="px-4 py-3">Status</th>
+                      <th className="px-4 py-3 font-semibold">Name</th>
+                      <th className="px-4 py-3 font-semibold">Email</th>
+                      <th className="px-4 py-3 font-semibold">Role</th>
+                      <th className="px-4 py-3 font-semibold">Department</th>
+                      <th className="px-4 py-3 font-semibold">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100">
                     {users.map((u) => (
-                      <tr key={u._id} className="hover:bg-slate-900/40">
-                        <td className="px-4 py-3 font-semibold text-white">{u.name}</td>
-                        <td className="px-4 py-3 text-slate-400 font-mono">{u.email}</td>
+                      <tr key={u._id} className="hover:bg-slate-50">
+                        <td className="px-4 py-3 font-medium text-slate-900">{u.name}</td>
+                        <td className="px-4 py-3 text-slate-600 font-mono text-[11px]">{u.email}</td>
                         <td className="px-4 py-3">
                           <span
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${
                               u.role === 'system_admin'
-                                ? 'bg-purple-500/20 text-purple-400'
+                                ? 'bg-purple-50 text-purple-700 border-purple-200'
                                 : u.role === 'department_admin'
-                                ? 'bg-amber-500/20 text-amber-400'
+                                ? 'bg-amber-50 text-amber-800 border-amber-200'
                                 : u.role === 'field_worker'
-                                ? 'bg-cyan-500/20 text-cyan-400'
-                                : 'bg-emerald-500/20 text-emerald-400'
+                                ? 'bg-sky-50 text-sky-700 border-sky-200'
+                                : 'bg-slate-100 text-slate-700 border-slate-200'
                             }`}
                           >
                             {u.role.replace('_', ' ')}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-slate-400">{u.department?.name || '—'}</td>
-                        <td className="px-4 py-3 text-emerald-400 font-medium">Active</td>
+                        <td className="px-4 py-3 text-slate-600">{u.department?.name || '—'}</td>
+                        <td className="px-4 py-3 text-emerald-700 font-medium">Active</td>
                       </tr>
                     ))}
                   </tbody>
@@ -218,23 +219,27 @@ export default function SystemAdminDashboard() {
           {activeTab === 'departments' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {departments.map((d) => (
-                <div key={d._id} className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                <div key={d._id} className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-sm text-white">{d.name}</h3>
-                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">
+                    <h3 className="font-bold text-sm text-slate-900">{d.name}</h3>
+                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold">
                       {d.code}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400">{d.description}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed">{d.description}</p>
                   <div>
                     <span className="text-[11px] text-slate-500 font-semibold uppercase">Covered Categories:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {d.categories?.map((cat) => (
-                        <span key={cat} className="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300">
+                        <span key={cat} className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                           {cat}
                         </span>
                       ))}
                     </div>
+                  </div>
+                  <div className="text-[11px] text-slate-500 pt-2 border-t border-slate-100 flex justify-between">
+                    <span>SLA: {d.slaHours} hours</span>
+                    <span>Contact: {d.contactPhone}</span>
                   </div>
                 </div>
               ))}
@@ -243,25 +248,25 @@ export default function SystemAdminDashboard() {
 
           {/* TAB 4: AUDIT TRAIL */}
           {activeTab === 'audit' && (
-            <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
-              <div className="p-4 border-b border-slate-800">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <History className="w-4 h-4 text-cyan-400" />
+            <div className="bg-white rounded-lg border border-slate-200 shadow-xs overflow-hidden">
+              <div className="p-4 border-b border-slate-200 bg-slate-50">
+                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <History className="w-4 h-4 text-blue-700" />
                   <span>Immutable System Audit Trail</span>
-                </h3>
+                </h2>
               </div>
               <div className="overflow-x-auto max-h-[500px]">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-900/80 text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                  <thead className="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-200">
                     <tr>
-                      <th className="px-4 py-3">Timestamp</th>
-                      <th className="px-4 py-3">Action</th>
-                      <th className="px-4 py-3">Target</th>
-                      <th className="px-4 py-3">User</th>
-                      <th className="px-4 py-3">Details</th>
+                      <th className="px-4 py-3 font-semibold">Timestamp</th>
+                      <th className="px-4 py-3 font-semibold">Action</th>
+                      <th className="px-4 py-3 font-semibold">Target</th>
+                      <th className="px-4 py-3 font-semibold">User</th>
+                      <th className="px-4 py-3 font-semibold">Details</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
+                  <tbody className="divide-y divide-slate-100 font-mono text-[11px]">
                     {auditLogs.length === 0 ? (
                       <tr>
                         <td colSpan={5} className="text-center py-6 text-slate-500">
@@ -270,12 +275,12 @@ export default function SystemAdminDashboard() {
                       </tr>
                     ) : (
                       auditLogs.map((log) => (
-                        <tr key={log._id} className="hover:bg-slate-900/40">
+                        <tr key={log._id} className="hover:bg-slate-50">
                           <td className="px-4 py-2.5 text-slate-500">{formatDate(log.createdAt)}</td>
-                          <td className="px-4 py-2.5 text-cyan-400 font-bold">{log.action}</td>
-                          <td className="px-4 py-2.5 text-slate-300">{log.targetType}</td>
-                          <td className="px-4 py-2.5 text-slate-400">{log.user?.name || 'System'}</td>
-                          <td className="px-4 py-2.5 text-slate-400 max-w-xs truncate">
+                          <td className="px-4 py-2.5 text-blue-700 font-bold">{log.action}</td>
+                          <td className="px-4 py-2.5 text-slate-700">{log.targetType}</td>
+                          <td className="px-4 py-2.5 text-slate-600">{log.user?.name || 'System'}</td>
+                          <td className="px-4 py-2.5 text-slate-500 max-w-xs truncate">
                             {JSON.stringify(log.details)}
                           </td>
                         </tr>

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { notificationApi } from '../services/notificationApi';
 import { useSocket } from './SocketContext';
 import { useAuth } from './AuthContext';
+import { CheckCircle2, AlertCircle, Info, AlertTriangle, X } from 'lucide-react';
 
 const NotificationContext = createContext();
 
@@ -107,33 +108,49 @@ export const NotificationProvider = ({ children }) => {
       }}
     >
       {children}
-      {/* Toast Render Container */}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col space-y-3 max-w-sm w-full pointer-events-none">
-        {toasts.map((toast) => (
-          <div
-            key={toast.id}
-            className={`pointer-events-auto p-4 rounded-xl shadow-2xl border text-sm flex items-start justify-between backdrop-blur-md transition-all duration-300 transform translate-y-0 ${
-              toast.type === 'success'
-                ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-100'
-                : toast.type === 'error'
-                ? 'bg-rose-950/90 border-rose-500/30 text-rose-100'
-                : toast.type === 'warning'
-                ? 'bg-amber-950/90 border-amber-500/30 text-amber-100'
-                : 'bg-slate-900/90 border-blue-500/30 text-slate-100'
-            }`}
-          >
-            <div className="pr-3">
-              {toast.title && <div className="font-semibold text-xs uppercase tracking-wider mb-1 opacity-90">{toast.title}</div>}
-              <div>{toast.message}</div>
-            </div>
-            <button
-              onClick={() => removeToast(toast.id)}
-              className="text-slate-400 hover:text-white text-xs font-bold ml-2"
+      {/* Clean Toast Notification Container */}
+      <div className="fixed bottom-5 right-5 z-50 flex flex-col space-y-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
+        {toasts.map((toast) => {
+          let borderClass = 'border-slate-300';
+          let icon = <Info className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />;
+
+          if (toast.type === 'success') {
+            borderClass = 'border-emerald-300 bg-white';
+            icon = <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />;
+          } else if (toast.type === 'error') {
+            borderClass = 'border-red-300 bg-white';
+            icon = <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />;
+          } else if (toast.type === 'warning') {
+            borderClass = 'border-amber-300 bg-white';
+            icon = <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />;
+          }
+
+          return (
+            <div
+              key={toast.id}
+              className={`pointer-events-auto p-3.5 rounded-lg shadow-md border bg-white text-slate-800 text-xs flex items-start justify-between gap-2.5 ${borderClass} animate-fadeIn`}
             >
-              ✕
-            </button>
-          </div>
-        ))}
+              <div className="flex items-start gap-2.5">
+                {icon}
+                <div>
+                  {toast.title && (
+                    <div className="font-semibold text-slate-900 text-xs mb-0.5">
+                      {toast.title}
+                    </div>
+                  )}
+                  <div className="text-slate-700 leading-snug">{toast.message}</div>
+                </div>
+              </div>
+              <button
+                onClick={() => removeToast(toast.id)}
+                className="text-slate-400 hover:text-slate-700 p-0.5 rounded transition-colors"
+                aria-label="Dismiss toast"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          );
+        })}
       </div>
     </NotificationContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -34,18 +34,20 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-[#060a10] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <span className="font-display font-extrabold text-white text-sm tracking-tight">CivicPulse</span>
-          <span className="text-slate-600">|</span>
-          <span className="text-slate-400">Intelligent Municipal Operations & Citizen Resolution Platform</span>
+    <footer className="border-t border-slate-200 bg-white py-8 px-4 sm:px-6 lg:px-8 text-xs text-slate-600 mt-auto">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
+          <span className="font-bold text-slate-800 text-sm">CivicPulse</span>
+          <span className="hidden sm:inline text-slate-300">•</span>
+          <span className="text-slate-600">Municipal Grievance & Public Service Management System</span>
         </div>
-        <div className="flex items-center gap-5 text-[11px] text-slate-400 font-medium">
-          <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> ISO-Compliant GIS</span>
-          <span>Neural Triaging</span>
-          <span>Cloud Database</span>
-          <span>Real-Time WebSockets</span>
+        <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500">
+          <Link to="/issues" className="hover:text-slate-900 transition-colors">Browse Issues</Link>
+          <Link to="/map" className="hover:text-slate-900 transition-colors">Incident Map</Link>
+          <Link to="/clusters" className="hover:text-slate-900 transition-colors">Hotspots</Link>
+          <Link to="/analytics" className="hover:text-slate-900 transition-colors">Public Telemetry</Link>
+          <span className="text-slate-300">|</span>
+          <span className="text-slate-500 font-medium">Non-Emergency Municipal Helpline: 1913</span>
         </div>
       </div>
     </footer>
@@ -58,7 +60,7 @@ export default function App() {
       <SocketProvider>
         <NotificationProvider>
           <Router>
-            <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+            <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-blue-700 selection:text-white">
               <Navbar />
               <main className="flex-1">
                 <Routes>
